@@ -130,7 +130,7 @@ function draw(seconds) {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
     gl.useProgram(program)
 
-    let v = m4view([2,1,0], [0,0,0], [0,1,0])
+    let v = m4view([Math.sin(seconds) * 2,1,Math.cos(seconds) * 2], [0,0,0], [0,1,0])
 
 
     let ld = normalize([0.1,1,0.3])
@@ -142,7 +142,7 @@ function draw(seconds) {
     gl.uniform3fv(program.uniforms.halfway, h)
 
     gl.bindVertexArray(GRID.vao)
-    let grid_m = m4rotY(seconds)
+    let grid_m = IdentityMatrix 
     gl.uniformMatrix4fv(program.uniforms.mv, false, m4mul(v,grid_m))
     gl.uniformMatrix4fv(program.uniforms.v, false, v)
     gl.drawElements(GRID.mode, GRID.count, GRID.type, 0)
